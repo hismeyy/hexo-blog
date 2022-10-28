@@ -6,6 +6,12 @@ keywords: 博客搭建
 cover: /img/blog/blog-top-img.jpg
 top_img: /img/blog/blog-top-img.jpg
 highlight_shrink: false
+tags: 
+	- 博客
+	- Hexo
+	- GitHub
+	- Vercel
+categories: 博客相关
 ---
 
 

@@ -6,6 +6,11 @@ keywords: JavaSE
 cover: /img/javaSE/javaSE-top-img.png
 top_img: /img/javaSE/javaSE-top-img.png
 highlight_shrink: false
+tags: 
+	- java
+	- 基础
+	- 入门
+categories: java相关
 ---
 
 # 一、入门

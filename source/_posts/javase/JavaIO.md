@@ -6,6 +6,11 @@ keywords: JavaSE
 cover: /img/javaSE/io/javaIO-top-img.jpg
 top_img: /img/javaSE/io/javaIO-top-img.jpg
 highlight_shrink: false
+tags: 
+	- java
+	- 进阶
+	- I/O
+categories: java相关
 ---
 
 # 文件
