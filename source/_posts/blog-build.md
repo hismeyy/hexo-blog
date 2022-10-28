@@ -1,6 +1,6 @@
 ---
 title: 搭建博客
-date: 2022-10-24
+date: 2022-10-1
 description: 用Hexo-GitHub-Vercel一同搭建。中间遇到了很多的问题，大概用了一天才解决。所以把他记录下来，
 keywords: 博客搭建
 cover: /img/blog/blog-top-img.jpg
