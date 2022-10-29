@@ -233,3 +233,34 @@ for(int i = 0; i < 10; i++){
 ## 选择
 1. 如果改查多，选择ArrayList
 2. 如果增删多，选择LinkedList
+
+# Set接口
+## Set基本介绍
+1. 无序（添加和取出顺序不同，没有索引）
+2. 不允许重复，最多包含一个null
+3. 取出数据的顺序是固定的
+## Set遍历
+1. 可以用迭代器
+2. 可以用增强for
+
+# HashSet
+## HashSet说明
+1. 实现了Set接口
+2. 底层是一个HashMap
+3. 可以存放null值，但只能存一个
+4. HashSet不确保元素是有序的，取决于hash后，再确定索引的结构
+5. 不能有重复的元素/对象
+
+## HashSet底层机制
+1. HashSet底层是HashMap，HashMao底层是数组+链表+红黑树
+2. 添加元素时，先得到hash值会转换成索引值
+3. 找到存储数据表table，看这个索引位置是否已经存放元素
+4. 如果没有，直接加入
+5. 如果有，调用equals比较，如果相同，就放弃添加，如果不同则添加在最后
+6. 在Java8中，如果一条链表的个数达到TREEIFY_THRESHOLD默认是8，并且table的大小>=Min_TREEIFY_CAPACITY(默认64)就会进行树化(红黑树)
+
+## HashSet源码分析
+1. 先执行HashSet()
+2. 执行add()
+3. 执行put方法，该方法执行hsah(key)，会得到key第一的hash值
+4. 

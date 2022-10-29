@@ -1,6 +1,6 @@
 ---
-title: JavaIO
-date: 2022-10-4
+title: JavaI/O流
+date: 2022-10-5
 description: 第二次学习IO的笔记，第一次学习是一年前跟着老杜学的。第二次学习是看着韩顺平老师的视频学的。
 keywords: JavaSE
 cover: /img/javaSE/io/javaIO-top-img.jpg
