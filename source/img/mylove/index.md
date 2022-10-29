@@ -15,3 +15,18 @@ aside: false
 ![](https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg)
 ![](https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg)
 {% endgallery %}
+
+<script type="text/javascript">
+  
+	var name = prompt("请输入密码!", "别偷偷的查看哦！");
+	if(name == "loveyoukk"){
+		alert("欢迎主人回家！")
+		
+	}else {
+		alert("我都说了别偷看！")
+		location.href = "/"
+	}
+	    
+
+  
+</script>
