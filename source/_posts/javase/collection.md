@@ -259,8 +259,4 @@ for(int i = 0; i < 10; i++){
 5. 如果有，调用equals比较，如果相同，就放弃添加，如果不同则添加在最后
 6. 在Java8中，如果一条链表的个数达到TREEIFY_THRESHOLD默认是8，并且table的大小>=Min_TREEIFY_CAPACITY(默认64)就会进行树化(红黑树)
 
-## HashSet源码分析
-1. 先执行HashSet()
-2. 执行add()
-3. 执行put方法，该方法执行hsah(key)，会得到key第一的hash值
-4. 
+## HashSet底层源码分析

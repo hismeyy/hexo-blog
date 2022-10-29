@@ -6,5 +6,5 @@ aside: false
 ---
 
 <div class="gallery-group-main">
-{% galleryGroup '我们' '我和我家的小宝贝' '/Gallery/mylove' https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png %}
+{% galleryGroup '我们' '我和我家的小宝贝' '/img/mylove' https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png %}
 </div>
