@@ -260,3 +260,150 @@ for(int i = 0; i < 10; i++){
 6. 在Java8中，如果一条链表的个数达到TREEIFY_THRESHOLD默认是8，并且table的大小>=Min_TREEIFY_CAPACITY(默认64)就会进行树化(红黑树)
 
 ## HashSet底层源码分析
+```java
+HashSet hashSet = new HashSet();
+hashSet.add("java");
+hashSet.add("php");
+hashSet.add("java");
+System.out.println(hashSet);
+```
+1. 第一次执行，new对象底层调用HashMap的无参构造
+2. 第一次添加，add方法底层调用put(),PRESENT是一个展位Object对象，是一个空对象
+	![](https://img.yublog.top/img/202210300952115.png)
+3. put方法有两个参数，key和val，key为需要加入的值，val是PRESENT，put调用putVal()
+	![](https://img.yublog.top/img/202210300956659.png)
+4. hash()通过算法，算出一个hash值
+	![](https://img.yublog.top/img/202210300957867.png)
+5. 进入putVal()
+	- 首先看一下HashMap的table是不是null或者长度是0，如果是就把table变成16，调用resize()
+		![](https://img.yublog.top/img/202210301007073.png)
+	- 第二步 通过(n - 1) & hash算出tab的索引值，如果该索引值中是null就在该索引值的tab中new一个Node
+		![](https://img.yublog.top/img/202210301007240.png)
+	- 第三步 判断当前size是不是大于threshold，threshold是临界值，当达到该临界值时进行扩容，怎么来的呢？看resize()中源码，里面有一个加载因子0.75乘上table的大小得到的
+		![](https://img.yublog.top/img/202210301017004.png)
+	- 第四步 长度足够，继续执行afterNodeInsertion()，但是该方法是空的，主要是留给HashMap的子类去实现，最后返回null
+6. 返回到add进行判断，如果是null则添加成功
+7. 第二次添加，因为table不等于空，所以跳过，创建table长度的代码
+	![](https://img.yublog.top/img/202210301023381.png)
+8. 后续执行和第一次一样
+9. 第三次添加，因为是添加的值是java所以跳过判断table是不是null和他的长度，因为该索引上不是null，所以继续跳过执行else中的代码
+	- 首先，看一下原先的hash是不是和现在值的hash一致，一致的话，把p赋值给e
+	- 最后返回oldValue
+10. 因为返回到add不等于null，所以添加失败
+
+## HashSet注意
+1. 为了使集合不添加重复对象，所以一定要根据实际要求重写equals和hashCode
+
+# LinkedHashSet
+## LinkedHashSet说明
+1. 是HashSet的一个子类，底层是LinkedHashMap，底层维护的是一个数组+双向链表
+2. LinkedHashSet根据元素的hashCOde值来确定元素的存储位置，同时使链表维护元素的次序，这使得元素看起来是以插入顺序保存的
+3. LinkedHashSet也是不允许添加重复元素
+
+## LinkedHashSet底层源码说明
+1. 在LinkedHashSet中维护了一个hash表和双向链表(LinkedHashSet有headhetail)
+2. 在每一个节点有before和after属性，这样可以形成双向链
+3. 在添加一个元素时，先求hash值，再求索引，确定该元素再table的位置，然后将添加的元素加入到双向链表(如果已经存在，不添加，和Hashset一样)
+	```java
+	taiil.next = newElement;
+	newElement.pre = tail;
+	tail = newElement;
+	```
+4. 这样的话，我们的遍历LinkedHashSet，也能确保插入顺序和遍历顺序一致
+
+# Map接口
+## Map接口实现的特点
+1. Map用于保存具有映射关系的数据：Key-Val
+2. Map中的Key和Val可以是任何引用类型的数据，会封装到HashMap对象中
+3. Map中的Key不允许重复
+4. Map中的Val可以重复
+5. Map中的key可以是null，Val也可以是null，注意Key为null，只能有一个，Val为null可以有多个
+6. 常用String类作为Map的key
+7. Key和Val之间存在单向一对一关系，即指定key总是可以找到对应的value
+8. Key和Val存放在Node中，Node实现了Entry接口
+	![](https://img.yublog.top/img/202210301340906.png)
+	- 为了遍历方便，还会创建EntrySet集合，该集合存放的元素类型是Entry，而Entry对象就有K，V，只是引用了一下Node中的K，V
+	- entrySet中，定义的类型是Map.Entry，但是实际上存放的还是HashMap$Node
+	- 这时因为HashMap$Node implements Map.Entry，多态
+	- 总之：**Node封装到Entry中，再把Entry放入EntrySet集合中，封装的时候只是引用，对象地址都相同**
+
+## Map接口常用方法
+1. put()——添加
+2. remove()——根据键删除映射关系
+3. get()——根据键获取值
+4. size()——获取元素个数
+5. isEMmpty()——判断个数是否为0
+6. clear()——清楚
+7. containsKey()——查找键是否存在
+	
+## Map接口遍历方法
+### 第一组
+先获取所有key(KeySet)，通过key取出val
+1. 增强for
+2. 迭代器
+### 第二组
+把所有的val取出，用map.values()
+1. 迭代器
+2. 增强for
+3. for遍历
+### 第三组
+通过EntrySet来获取k-v
+1. 增强for
+	- 将entry转成Map.Entry
+	- 调用getKey()和getValue()
+2. 迭代器
+	- 将entry转成Map.Entry
+	- 调用getKey()和getValue()
+
+# HashMap
+## HashMap源码分析
+1. HashMap底层维护Node类型的数组table，默认是null
+2. 当创建对象时，将加载因子(loadfactor)初始化为0.75
+3. 当添加key-val时通过key和哈希值得到table的索引，然后判断该索引处是否有元素，如果没有元素直接添加，如果相同，直接替换，如果不相同需要判断是树结构还是链表结构，做出相应处理。如果添加时发现容量不够，则需要进行扩容。
+4. 第一次添加，则徐涛扩容table容量为16，临界值(threshold)为12
+5. 以后再扩容，需要扩容table容量为原来的2倍，即24依次类推
+6. 在Java8，如果一条链表的袁术个数超过TREEIFY_THRESHOLD(默认是8)，并且table的大小>=MIN_TREEIFY_CAPACITY(默认是64)，就会进行树化(红黑树)
+
+# Hashtable
+## Hashtable说明
+1. 存放的的元素是键值对：即K-V
+2. Hashtable的键和值都不能为null，如果是null则抛出NullPointerException异常
+3. Hashtable使用方法本上和HashMap一样
+4. Hashtable是线程安全的(synchronized)，HashMap是线程不安全的
+5. 底层
+	- 底层有数组 Hashtable$Entry[] 初始化大小为11
+		![](https://img.yublog.top/img/202210301607656.png)
+	- 临界值 threshold 8 = 11 * 0.75
+6. 扩容
+![](https://img.yublog.top/img/202210301628954.png)
+	- 当达到临界值8时，进行扩容，新容量等于老容量乘2加1
+
+# Properties
+## Properties基本介绍
+1. Properties类继承Hashtable类并且实现了Map接口，也是使用一种键值对的形式保存数据
+2. 他的使用特点和Hashtable类似
+3. Properties还可以用于从xxx.properties文件中，加载数据到Properties类对象，并进行读取和修改
+4. Properties，值不能为空，如果是空，则抛出NullPointerException
+
+# TreeSet
+## TreeSet特点
+1. 当使用无参构造时，也是无序的
+2. 可以排序
+
+# 开发中如何选择集合实现类
+1. 先判断存储的类型，是一组对象还是一组键值对
+2. 一组对象：Collection接口
+	- 允许重复：List
+		增删多：LinkedList(底层维护一个双向链表)
+		改查多：ArrayList(底层维护Object类型的可变数组)
+	- 不允许重复：Set
+		无序：HashSet(底层是HashMap，维护了一个哈希表，即(数组+链表+红黑树))
+		排序：TreeSet
+		插入和取出的顺序一致：LinkedHashSet(底层维护数组+双向链表)
+3. 一组键值对：Map接口
+	- 键无序：HashMap(底层维护：哈希表JDK7：数组+链表，JDK8：数组+链表+红黑树)
+	- 键排序：TreeMap
+	- 键插入和取出顺序一致：LinkedHashMap
+	- 读取文件：Properties
+		
+
