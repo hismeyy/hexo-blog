@@ -387,8 +387,15 @@ System.out.println(hashSet);
 
 # TreeSet
 ## TreeSet特点
-1. 当使用无参构造时，也是无序的
-2. 可以排序
+1. 当使用无参构造时，输出按自然顺序排列，字母小到大，数字小到大，和输入顺序不同
+2. 指定排序，传入一个比较器，Comparator实现该接口
+3. 底层是TreeMap
+
+# TreeMap
+## TreeMap
+1. 当使用无参构造时，输出按自然顺序排列，字母小到大，数字小到大，和输入顺序不同
+2. 指定排序，传入一个比较器，Comparator实现该接口
+3. 存储K-V
 
 # 开发中如何选择集合实现类
 1. 先判断存储的类型，是一组对象还是一组键值对
@@ -405,5 +412,32 @@ System.out.println(hashSet);
 	- 键排序：TreeMap
 	- 键插入和取出顺序一致：LinkedHashMap
 	- 读取文件：Properties
-		
 
+# Collection工具类
+## 排序操作
+1. reverse(List)
+	反转List中的元素的排序
+2. shuffle(List)
+	对List集合元素进行随机排序
+3. sort(List)
+	根据元素的自然顺序对指定List集合元素按升序排序
+4. sort(List, Comparator)
+	根据指定的Comparator产生的顺序对List集合元素进行排序
+5. swap(List, int, int)
+	将指定List集合中的i处元素和j处元素进行交换
+
+## 查找，替换
+1. Object max(Collection)
+	根据元素的自然顺序，返回给定集合中的最大元素
+2. Object max(Collection, Comparator)
+	根据Comparator指定顺序返回给定集合中自大元素
+3. Object min(Collection)
+	根据元素的自然顺序，返回给定集合中的最小元素
+4. Object min(Collection, Comparator)
+	根据Comparator指定顺序返回给定集合中最小元素
+5. int frequency(Collection, Object)
+	返回指定集合中元素出现的次数
+6. void copy(Listdest, List src)
+	将src中的内容赋值到dest中
+7. boolean replaceAll(List list, Object oldVal, Object newVal)
+	使用新值替换List对象的所有旧值
