@@ -170,7 +170,7 @@ Java Virtual Machine
 
    java源文件通过编译器编译成class字节码文件，然后运行时，放入类加载器，然后进行字节码校验，最后又解释器进行解释执行。
 
-   ![image-20221022125917152](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221022125917152.png)
+   ![](https://img.yublog.top/img/202211041507993.png)
 
 ## 1.8 安装IDEA
 
@@ -214,7 +214,7 @@ Java Virtual Machine
 
 1. 关键字
 
-   ![image-20221022143844510](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221022143844510.png)
+   ![](https://img.yublog.top/img/202211041503352.png)
 
 2. 标识符命名
 
@@ -293,7 +293,7 @@ Java Virtual Machine
 
 1. 运算中，不同类型之间会进行类型转换
 
-   ![image-20221022154037317](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221022154037317.png)
+   ![](https://img.yublog.top/img/202211041504489.png)
 
 2. 强制转换
 
@@ -648,7 +648,7 @@ Java Virtual Machine
 
 1. Java内存分析
 
-   ![image-20221023120137333](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221023120137333.png)
+   ![](https://img.yublog.top/img/202211041505098.png)
 
    
 
@@ -761,7 +761,7 @@ Java Virtual Machine
 
 1. 内存分析
 
-   ![image-20221023150730594](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221023150730594.png)
+   ![](https://img.yublog.top/img/202211041506713.png)
 
 ## 6.6 封装
 
@@ -909,7 +909,7 @@ Java Virtual Machine
 
 ## 7.2 异常的体系结构
 
-![image-20221023201620670](D:\A MyBlog\blog\source\_posts\JavaSE.assets\image-20221023201620670.png)
+![](https://img.yublog.top/img/202211041506554.png)
 
 ## 7.3 捕获和抛出异常
 
@@ -938,88 +938,3 @@ Java Virtual Machine
 3. 如果在当前抛出异常的方法中处理异常可以使用try-catch语句捕获并处理，否则在方法的声明处通过throws关键字抛出异常给调用者
 4. 在出现异常方法的调用者中捕获并处理异常
 
-# 八、常用类
-
-## 8.1 Object类
-
-1. Object类是所有类的父类，在没有明确继承某类的情况下，默认会继承Object类
-
-2. Object类提供无参构造方法，是因为子类对象实例化时都会调用父类的无参构造方法
-
-3. Object中常用的方法
-
-   - clone()
-
-     创建与该对象相同的新对象
-
-     需要实现Cloneable接口，如果不实现该接口，就会抛出CloneNotSupportedException异常
-
-   - equalse()
-
-     比较两个对象是否相同，默认比较的是地址值
-
-   - finalize()
-
-   - getClass()
-
-     返回一个悐运行时的实例类
-     
-   - hashCode()
-
-     返回该对象的散列码值
-
-   - notify()
-
-     激活等待在该对象的监视器的一个线程
-
-   - notifyAll()
-
-     激活等待在该对象的监视器上的全部线程
-
-   - toString()
-
-      返回该对象的字符串表示，默认返回运行时类名+@+对象的hashCode的16进制数
-
-     ```java
-     public String toString() {
-         return getClass().getName() + "@" + nteger.toHexString(hashCode());
-     }
-     ```
-
-   - wait()
-
-     在其他线程调用此对象的notify()方法或者notifyAll()方法前，倒置当前线程等待
-
-4. 注意：
-
-   - 两个对象的哈希值不同，两个对象一定不同
-   - 如果两个哈希值相同的对象，不能确定这两个对象一定相等
-   - 克隆对象对应的类需要实现Cloneable接口，否则会报错：java.lang.CloneNotSupportedException
-
-​     
-
-## 8.2 Math类
-
-## 8.3 File类
-
-## 8.4 包装类
-
-## 8.5 Date类
-
-## 8.6 String类
-
-## 8.7 StringBuffer类
-
-## 8.8 StringBuilder类
-
-# 九、集合框架
-
-# 十、泛型
-
-# 十一、IO流
-
-# 十二、多线程
-
-# 十三、网络编程
-
-# 十四、注解和反射
