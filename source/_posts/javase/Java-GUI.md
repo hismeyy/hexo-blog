@@ -1,6 +1,6 @@
 ---
 title: JavaGUI
-date: 2022-10-05
+date: 2022-10-30
 description: JavaGUI还是挺简单的，主要是写起来麻烦并且界面不是很好看。学习也是为了写工具。
 keywords: JavaSE
 cover: https://img.yublog.top/img/202211012218532.jpg

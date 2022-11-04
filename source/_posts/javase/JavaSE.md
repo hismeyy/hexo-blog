@@ -1,6 +1,6 @@
 ---
 title: JavaSE
-date: 2022-10-02
+date: 2022-10-26
 description: 第一次学习Java是看着老杜视频，但是开始没有意识到写博客，如今通过狂神进行第二次学习，因此记录下该笔记。
 keywords: JavaSE
 cover: /img/javaSE/javaSE-top-img.png

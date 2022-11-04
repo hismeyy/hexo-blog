@@ -1,6 +1,6 @@
 ---
 title: Java集合框架
-date: 2022-10-3
+date: 2022-10-27
 description: 第一次学习集合是看着老杜的视频，当时看的时候有点懵，草草的就过了。第二次是看着韩顺平的视频，不得不说非常详细。
 keywords: JavaSE
 cover: https://img.yublog.top/img/202210280800752.jpg

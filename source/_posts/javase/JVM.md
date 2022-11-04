@@ -1,6 +1,6 @@
 ---
 title: JVM
-date: 2022-10-4
+date: 2022-10-31
 description: 不管现在的高级框架发展成什么样子，基础一定要学。第一次学习JVM，看着尚硅谷宋红康的视频，讲的挺清楚。
 keywords: JavaSE
 cover: https://img.yublog.top/img/202210282225449.jpg
