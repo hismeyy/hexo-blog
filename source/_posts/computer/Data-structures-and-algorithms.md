@@ -36,3 +36,6 @@ categories: 计算机基础相关
 
 1. <a href="/Data-structures-and-algorithms/sparseArray">稀疏数组（SparseArray）</a>
 2. <a href="/Data-structures-and-algorithms/queueArray">队列数组（QueueArray）</a>
+3. <a href="/Data-structures-and-algorithms/circularQueueArray">环形队列数组（CircularQueueArray）</a>
+
+
