@@ -34,5 +34,5 @@ categories: 计算机基础相关
 > 为了后期方便复习观看，因此细分了目录
 > 代码 https://github.com/hismeyy/DSAAT
 
-1. <a href="/Data-structures-and-algorithms/sparseArray">稀疏数组SparseArray</a>
-2. <a href="/ma">队列</a>
+1. <a href="/Data-structures-and-algorithms/sparseArray">稀疏数组（SparseArray）</a>
+2. <a href="/Data-structures-and-algorithms/queueArray">队列数组（QueueArray）</a>
