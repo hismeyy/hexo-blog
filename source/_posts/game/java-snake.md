@@ -11,3 +11,13 @@ tags:
 	- 游戏
 categories: java相关
 ---
+
+是不是以为我会有介绍，当然没有啦，贪吃蛇太简单啦，看看源码，就能做。加油！
+
+> 代码在这里
+> https://github.com/hismeyy/snake
+
+
+
+
+
