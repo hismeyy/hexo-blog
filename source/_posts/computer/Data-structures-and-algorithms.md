@@ -38,6 +38,9 @@ categories: 计算机基础相关
 2. <a href="/Data-structures-and-algorithms/queueArray">队列数组（QueueArray）</a>
 3. <a href="/Data-structures-and-algorithms/circularQueueArray">环形队列数组（CircularQueueArray）</a>
 4. <a href="/Data-structures-and-algorithms/singlyLinkedList">单向链表（SinglyLinkedList）</a>
-4. <a href="/Data-structures-and-algorithms/doubleLinkedList">双向链表（DoubleLinkedList）</a>
+5. <a href="/Data-structures-and-algorithms/doubleLinkedList">双向链表（DoubleLinkedList）</a>
+6. <a href="/Data-structures-and-algorithms/circularSinglyLinkedList">单向环形链表（CircularSinglyLinkedList）</a>
+7. <a href="/Data-structures-and-algorithms/arrayStack">数组栈（ArrayStack）</a>
+
 
 
