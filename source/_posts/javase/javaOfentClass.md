@@ -12,7 +12,7 @@ tags:
 categories: java相关
 ---
 
-# Object类
+# 一、Object类
 类 Object 是类层次结构的根类。每个类都使用 Object 作为超类。所有对象（包括数组）都实现这个类的方法，简单来说，Object类是所有类的父类，所有类都默认继承了Objet类。
 ## hashCode()
 - 返回该对象的哈希值
@@ -25,7 +25,7 @@ categories: java相关
 - 表示两个对象是否相等
 - 建议重写
 
-# String类
+# 二、String类
 String是不可变字符串序列
 ## length()
 - 获取字符串长度
@@ -36,7 +36,7 @@ String是不可变字符串序列
 ## substring()
 - 从指定位置开始截取到指定位置结束当前位置字符串
 
-# StringBuffer类和StringBuilder类
+# 三、StringBuffer类和StringBuilder类
 StringBuffer是线程安全的可变字符串序列
 StringBuilder是线程不安全的可变字符串序列
 ## append()
@@ -54,7 +54,7 @@ StringBuilder是线程不安全的可变字符串序列
 ## substring()
 - 截取字符串
 
-# Arrays类
+# 四、Arrays类
 ## toString()
 - 遍历
 ## sort()
@@ -62,7 +62,7 @@ StringBuilder是线程不安全的可变字符串序列
 ## binarySearch()
 - 查找
 
-# 包装类
+# 五、包装类
 基本类型的包装类：将我们的基本类型包装起来，可以添加相关方法，简化操作
 - byte——Byte
 - short——Short
@@ -79,7 +79,8 @@ StringBuilder是线程不安全的可变字符串序列
 ## toHexString()
 - 转换十六进制
 
-# Math类
+# 六、Math类
+
 ## random()
 - 产生一个0-1之间的随机小数
 ## abs()
@@ -108,14 +109,14 @@ StringBuilder是线程不安全的可变字符串序列
 ## round()
 - 四舍五入
 
-# Date类
+# 七、Date类
 Date 类表示系统特定的时间戳，可以精确到毫秒。Date 对象表示时间的默认顺序是星期、月、日、小时、分、秒、年
-## 构造方法
+## 7.1 构造方法
 - Date()
 	此种形式表示分配 Date 对象并初始化此对象，以表示分配它的时间（精确到毫秒），使用该构造方法创建的对象可以获取本地的当前时间
 - Date(long date)
 	此种形式表示从 GMT 时间（格林尼治时间）1970 年 1 月 1 日 0 时 0 分 0 秒开始经过参数 date 指定的毫秒数
-## 常用方法
+## 7.2 常用方法
 ### after()
 - 判断此日期是否在指定日期之后
 ### before()
