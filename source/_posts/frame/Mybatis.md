@@ -625,9 +625,369 @@ Map<String, Object> selectUserToMaps();
 </select>
 ```
 
+# 六、特殊的SQL
 
+## 6.1 模糊查询
 
+1. ```sql
+   select * from tb_user where username like '%${mohu}%'
+   ```
 
+2. ```sql
+   select * from tb_user where username like concat('%',#{mohu},'%')
+   ```
 
+3. ```sql
+   select * from tb_user where username like "%"#{mohu}"%"
+   ```
 
+## 6.2 批量删除
 
+1. ```sql
+   delete from tb_user where id in (${ids})
+   ```
+
+## 6.3 动态设置表名
+
+1. ```sql
+   select * from ${tableName}
+   ```
+
+## 6.4 添加功能获取自增的主键
+
+> useGeneratedKeys：设置使用自增的主键
+> keyProperty：因为增删改有统一的返回值是受影响的行数，因此只能将获取的自增的主键放在传输的参
+> 数user对象的某个属性中
+
+```java
+int insertUser(User user);
+```
+
+```xml
+<insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+	insert into tb_user values(null,#{username},#{password},#{age},#{sex})
+</insert>
+```
+
+# 七、自定义映射resultMap
+
+## 7.1 resultMap处理字段和属性的映射关系
+
+> 若字段名和实体类中的属性名不一致，则可以通过resultMap设置自定义映射
+>
+> 字段名符合数据库的规则（使用\_），实体类中的属性名符合Java的规则（使用驼峰）此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系
+> a）可以通过为字段起别名的方式，保证和实体类中的属性名保持一致
+> b）可以在MyBatis的核心配置文件中设置一个全局配置信息mapUnderscoreToCamelCase，可
+> 以在查询表中数据时，自动将_类型的字段名转换为驼峰
+
+resultMap：设置自定义映射
+
+- 属性：
+  			id：表示自定义映射的唯一标识
+    			type：查询的数据要映射的实体类的类型
+- 子标签：
+  			id：设置主键的映射关系
+    			result：设置普通字段的映射关系
+    			association：设置多对一的映射关系
+    			collection：设置一对多的映射关系
+- 属性：
+  				property：设置映射关系中实体类中的属性名
+        				column：设置映射关系中表中的字段名
+
+```xml
+<resultMap id="userMap" type="User">
+	<id property="id" column="id"></id>
+	<result property="userName" column="user_name"></result>
+	<result property="password" column="password"></result>
+	<result property="age" column="age"></result>
+	<result property="sex" column="sex"></result>
+</resultMap>
+
+<select id="testMohu" resultMap="userMap">
+	select * from td_user where username like '%${mohu}%
+</select>
+```
+
+MyBatis的核心配置文件中设置一个全局配置信息mapUnderscoreToCamelCase
+
+```xml
+<settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+</settings>
+```
+
+## 7.2 多对一映射处理
+
+1. 级联方式处理映射关系
+
+   ```xml
+   <resultMap id="empDeptMap" type="Emp">
+   	<id column="eid" property="eid"></id>
+   	<result column="ename" property="ename"></result>
+   	<result column="age" property="age"></result>
+   	<result column="sex" property="sex"></result>
+   	<result column="did" property="dept.did"></result>
+   	<result column="dname" property="dept.dname"></result>
+   </resultMap>
+   <!--Emp getEmpAndDeptByEid(@Param("eid") int eid);-->
+   <select id="getEmpAndDeptByEid" resultMap="empDeptMap">
+   	select emp.*,dept.* from t_emp emp 
+       left join t_dept dept 
+       on emp.did = dept.did 
+       where emp.eid = #{eid}
+   </select>
+   ```
+
+2. 使用association处理映射关系
+
+   ```xml
+   <resultMap id="empDeptMap" type="Emp">
+   	<id column="eid" property="eid"></id>
+   	<result column="ename" property="ename"></result>
+   	<result column="age" property="age"></result>
+   	<result column="sex" property="sex"></result>
+   	<association property="dept" javaType="Dept">
+   		<id column="did" property="did"></id>
+   		<result column="dname" property="dname"></result>
+   	</association>
+   </resultMap>
+   <!--Emp getEmpAndDeptByEid(@Param("eid") int eid);-->
+   <select id="getEmpAndDeptByEid" resultMap="empDeptMap">
+   	select emp.*,dept.* from t_emp emp 
+       left join t_dept dept 
+       on emp.did =dept.did 
+       where emp.eid = #{eid}
+   </select>	
+   ```
+
+3. 分步查询
+
+   ```xml
+   <resultMap id="empDeptStepMap" type="Emp">
+   	<id column="eid" property="eid"></id>
+   	<result column="ename" property="ename"></result>
+   	<result column="age" property="age"></result>
+   	<result column="sex" property="sex"></result>
+   	<!--
+   		select：设置分步查询，查询某个属性的值的sql的标识（namespace.sqlId）
+   		column：将sql以及查询结果中的某个字段设置为分步查询的条件
+   	-->
+   	<association property="dept"
+   		select="com.mybatis.mapper.DeptMapper.getEmpDeptByStep" 
+           column="did">
+   	</association>
+   </resultMap>
+   
+   <!--第一步-->
+   <!--Emp getEmpByStep(@Param("eid") int eid);-->
+   <select id="getEmpByStep" resultMap="empDeptStepMap">
+   	select * from t_emp where eid = #{eid}
+   </select>
+   <!--第二步-->
+   <!--Dept getEmpDeptByStep(@Param("did") int did);-->
+   <select id="getEmpDeptByStep" resultType="Dept">
+   	select * from t_dept where did = #{did}
+   </select>
+   ```
+
+## 7.3 一对多映射处理
+
+1. collection
+
+   ```xml
+   <resultMap id="deptEmpMap" type="Dept">
+   	<id property="did" column="did"></id>
+   	<result property="dname" column="dname"></result>
+   	<!--
+   		ofType：设置collection标签所处理的集合属性中存储数据的类型
+   	-->
+   	<collection property="emps" ofType="Emp">
+   		<id property="eid" column="eid"></id>
+   		<result property="ename" column="ename"></result>
+   		<result property="age" column="age"></result>
+   		<result property="sex" column="sex"></result>
+   	</collection>
+   </resultMap>
+   <!--Dept getDeptEmpByDid(@Param("did") int did);-->
+   <select id="getDeptEmpByDid" resultMap="deptEmpMap">
+   	select dept.*,emp.* from t_dept dept 
+       left join t_emp emp 
+       on dept.did = emp.did 
+       where dept.did = #{did}
+   </select>
+   ```
+
+2. 分步查询
+
+   ```xml
+   <resultMap id="deptEmpStep" type="Dept">
+   	<id property="did" column="did"></id>
+   	<result property="dname" column="dname"></result>
+   	<collection property="emps" fetchType="eager"
+   		select="com.mybatis.mapper.EmpMapper.getEmpListByDid" 	
+           column="did">
+   	</collection>
+   </resultMap>
+   
+   <!--第一步-->
+   <!--Dept getDeptByStep(@Param("did") int did);-->
+   <select id="getDeptByStep" resultMap="deptEmpStep">
+   	select * from t_dept where did = #{did}
+   </select>
+   <!--第二步-->
+   <!--List<Emp> getEmpListByDid(@Param("did") int did);-->
+   <select id="getEmpListByDid" resultType="Emp">
+   	select * from t_emp where did = #{did}
+   </select>
+   ```
+
+## 7.4 分步查询的优点
+
+> 可以实现延迟加载，但是必须在核心配置文件中设置全局配置信息：
+>
+> lazyLoadingEnabled：延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。
+> aggressiveLazyLoading：当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载。此时就可以实现按需加载，获取的数据是什么，就只会执行相应的sql。
+> 
+> 此时可通过association和collection中的fetchType属性设置当前的分步查询是否使用延迟加载， fetchType="lazy(延迟加载)|eager(立即加载)"
+
+# 八、动态SQL
+
+## 8.1 if标签
+
+> if标签可通过test属性的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之标签中的内容不会执行
+
+```xml
+<select id="getEmpListByMoreTJ" resultType="Emp">
+	select * from t_emp where 1=1
+	<if test="ename != '' and ename != null">
+		and ename = #{ename}
+	</if>
+	<if test="age != '' and age != null">
+		and age = #{age}
+	</if>
+	<if test="sex != '' and sex != null">
+		and sex = #{sex}
+	</if>
+</select>
+```
+
+## 8.2 where标签
+
+> where和if一般结合使用：
+> a）若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字
+> b）若where标签中的if条件满足，则where标签会自动添加where关键字，并将条件最前方多余的
+> and去掉
+> **注意**：where标签不能去掉条件最后多余的and
+
+```xml
+<select id="getEmpListByMoreTJ2" resultType="Emp">
+	select * from t_emp
+	<where>
+		<if test="ename != '' and ename != null">
+			ename = #{ename}
+		</if>
+		<if test="age != '' and age != null">
+			and age = #{age}
+		</if>
+		<if test="sex != '' and sex != null">
+			and sex = #{sex}
+		</if>
+	</where>
+</select>
+```
+
+## 8.3 trim标签
+
+>trim用于去掉或添加标签中的内容
+>常用属性：
+>prefix：在trim标签中的内容的**前面添加**某些内容
+>prefixOverrides：在trim标签中的内容的**前面去掉**某些内容
+>suffix：在trim标签中的内容的**后面添加**某些内容
+>suffixOverrides：在trim标签中的内容的**后面去掉**某些内容
+
+```xml
+<select id="getEmpListByMoreTJ" resultType="Emp">
+	select * from t_emp
+	<trim prefix="where" suffixOverrides="and">
+		<if test="ename != '' and ename != null">
+    		ename = #{ename} and
+		</if>
+		<if test="age != '' and age != null">
+			age = #{age} and
+		</if>
+		<if test="sex != '' and sex != null">
+			sex = #{sex}
+		</if>
+	</trim>
+</select>
+```
+
+## 8.4 choose、when、otherwise标签
+
+> choose、when、 otherwise相当于if...else if..else
+
+```xml
+<select id="getEmpListByChoose" resultType="Emp">
+	select <include refid="empColumns"></include> from t_emp
+	<where>
+		<choose>
+			<when test="ename != '' and ename != null">
+				ename = #{ename}
+			</when>
+			<when test="age != '' and age != null">
+				age = #{age}
+			</when>
+			<when test="sex != '' and sex != null">
+				sex = #{sex}
+			</when>
+			<when test="email != '' and email != null">
+				email = #{email}
+			</when>
+		</choose>
+	</where>
+</select>
+```
+
+## 8.5 foreach标签
+
+```xml
+<!--批量插入-->
+<insert id="insertMoreEmp">
+	insert into t_emp values
+	<foreach collection="emps" item="emp" separator=",">
+		(null,#{emp.ename},#{emp.age},#{emp.sex},#{emp.email},null)
+	</foreach>
+</insert>
+<!--批量删除-->
+<delete id="deleteMoreByArray">
+	delete from t_emp where
+	<foreach collection="eids" item="eid" separator="or">
+		eid = #{eid}
+	</foreach>
+</delete>
+<!--批量删除-->	
+<delete id="deleteMoreByArray">
+	delete from t_emp where eid in
+	<foreach collection="eids" item="eid" separator="," open="(" close=")">
+	    #{eid}
+	</foreach>
+</delete>
+```
+
+## 8.6 sql片段
+
+> sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入
+
+```xml
+<sql id="empColumns">
+	eid,ename,age,sex,did
+</sql>
+
+select <include refid="empColumns"></include> from t_emp
+```
+
+# 九、Mybatis的缓存
+
+# 十、Mybatis的逆向工程
+
+# 十一、分页插件
