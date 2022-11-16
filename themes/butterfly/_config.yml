@@ -7,10 +7,10 @@ menu:
   # 时间轴: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
-  学习||fas fa-battery-full:
+  #学习||fas fa-battery-full:
     # 音乐: /music/ || fas fa-music
     # 照片: /Gallery/ || fas fa-images
-    英语: /english/ || fas fa-book
+    #英语: /english/ || fas fa-book
 
   娱乐||fa fa-heartbeat:
     # 音乐: /music/ || fas fa-music
