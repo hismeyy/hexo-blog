@@ -46,10 +46,10 @@ categories: 计算机基础相关
 10. <a href="/Data-structures-and-algorithms/bubbleSort">冒泡排序（BubbleSort）</a>
 11. <a href="/Data-structures-and-algorithms/selectSort">选择排序（SelectSort）</a>
 12. <a href="/Data-structures-and-algorithms/insertSort">插入排序（InsertSort）</a>
+13. <a href="/Data-structures-and-algorithms/shellSotr">希尔排序（ShellSotr）</a>
+14. <a href="/Data-structures-and-algorithms/quickSort">快速排序（QuickSort）</a>
+15. <a href="/Data-structures-and-algorithms/mergetSort">归并排序（MergetSort）</a>
 
-13. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
-14. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
-15. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
 16. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
 17. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
 18. <a href="/Data-structures-and-algorithms/recursion">递归（Recursion）</a>
