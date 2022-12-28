@@ -230,11 +230,11 @@ WHERE 过滤条件
     LIMIT [位置偏移量,] 行数
     ```
 
-分页显式公式：
-```mysql
-SELECT * FROM 表
-LIMIT (PageNo - 1) * PageSize, PageSize;
-```
+2. 分页显式公式：
+   ```mysql
+   SELECT * FROM 表
+   LIMIT (PageNo - 1) * PageSize, PageSize;
+   ```
 
-注意：
-LIMIT 子句必须放在整个SELECT语句的最后！
+3. 注意：
+   LIMIT 子句必须放在整个SELECT语句的最后！
