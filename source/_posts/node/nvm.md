@@ -5,7 +5,7 @@ description: 多个项目同时进行最需要的node版本管理工具
 keywords: nvm
 tags: 
     - node
-	- nvm
+    - nvm
 categories: node
 ---
 
